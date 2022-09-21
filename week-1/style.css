@@ -1,0 +1,249 @@
+/* 1200px < 螢幕解析度的寬度 <= 1920px */
+
+/* 網頁上方標題和選單列 */
+.header{
+    display: flex;
+    align-items: center;
+    margin-left: -3px;
+    margin-right: -3px;
+}
+
+/* 網頁上方標題 */
+.header-text{
+    flex: none;
+    width: 200px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 所有選單 */
+.items{
+    flex: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 個別選單 */
+.item{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    flex: none;
+    width: 100px;
+}
+
+/* 漢堡圖區塊 */
+.list{
+    flex: auto;
+    display: none;
+}
+
+/* 漢堡圖示 */
+.list-img{
+    width: 28px;
+    height: 28px;
+}
+
+/* 中間區塊 */
+.middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background-color: lightblue;
+}
+
+/* 中間歡迎文字 */
+.middle-text{
+    flex: none;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 主內容區塊 */
+.content-container{
+    display: flex;   
+    justify-content: center;   
+    margin-top: 50px;
+}
+
+/* 主內容 */
+.content{ 
+    flex: none;
+    width: 1200px;
+}
+
+/* promotion區塊 */
+.promotion{
+    display: flex;
+    margin-bottom: 2%;
+}
+
+/* promotion左半側 */
+.promotion-left{
+    flex: none;
+    width: 48%;
+    height: 50px;
+    margin-right: 2%;
+    display: flex;
+}
+
+/* promotion右半側 */
+.promotion-right{
+    flex: none;
+    width: 48%;
+    height: 50px;
+    margin-left: 2%;
+    display: flex;
+}
+
+/* promotion圖片區塊 */
+.promotion-img-container{
+    flex: none;
+    width: 80px;
+    height: 50px;
+}
+
+/* promotion圖片 */
+.promotion-img{
+    width: 100%;
+    height: 100%;
+}
+
+/* promotion文字區塊 */
+.promotion-text{
+    flex: auto;
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+    font-size: 20px;
+    background-color: lightblue;
+}
+
+/* title-container區塊 */
+.title-container{
+    display: flex;
+    margin-bottom: 50px;
+}
+
+/* title-container左半側 */
+.title-container-left{
+    flex: none;
+    width: 48%;
+    margin-right: 2%;
+    display: flex;
+}
+
+/* title-container右半側 */
+.title-container-right{
+    flex: none;
+    width: 48%;
+    margin-left: 2%;
+    display: flex;
+}
+
+/* title左半側 */
+.title-left{
+    flex: none;
+    width: 48%;
+    margin-right: 2%;
+}
+
+/* title右半側 */
+.title-right{
+    flex: none;
+    width: 48%;
+    margin-left: 2%;
+}
+
+/* title圖片 */
+.title-img{
+    width: 100%;
+    height: 100%;
+}
+
+/* title文字區塊 */
+.title-text{    
+    background-color: lightblue;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* 600px < 螢幕解析度的寬度 <= 1200px */
+@media(max-width: 1200px){
+    .content{
+        width: 90%;
+    }
+
+    .title-container{
+        flex-wrap: wrap;
+        margin-bottom: 0%;
+    }
+
+    .title-container-left{
+        width: 100%;
+        margin-right: 0%;
+        margin-bottom: 50px;
+    }
+
+    .title-container-right{
+        width: 100%;
+        margin-left: 0%;
+        margin-bottom: 50px;
+    }
+}
+
+@media(max-width: 600px){
+    .items{
+        display: none;
+    }
+    
+    .list{  
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .promotion{
+        flex-wrap: wrap;
+        margin-bottom: 0%;
+    }
+
+    .promotion-left{
+        width: 100%;
+        margin-right: 0%;
+        margin-bottom: 25px;
+    }
+    
+    .promotion-right{
+        width: 100%;
+        margin-left: 0%;
+        margin-bottom: 25px;
+    }
+
+    .title-container-left{
+        flex-wrap: wrap;
+        margin-bottom: 0%;
+    }
+
+    .title-container-right{
+        flex-wrap: wrap;
+        margin-bottom: 0%;
+    }
+
+    .title-left{
+        width: 100%;
+        margin-right: 0%;
+        margin-bottom: 50px;
+    }
+
+    .title-right{
+        width: 100%;
+        margin-left: 0%;
+        margin-bottom: 50px;
+    }
+
+}
