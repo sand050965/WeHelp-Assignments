@@ -150,6 +150,7 @@
     flex: none;
     width: 48%;
     margin-right: 2%;
+    position: relative;
 }
 
 /* title右半側 */
@@ -157,17 +158,29 @@
     flex: none;
     width: 48%;
     margin-left: 2%;
+    position: relative;
 }
 
 /* title圖片 */
 .title-img{
     width: 100%;
     height: 100%;
+}   
+
+/* 星星icon */
+.star-img{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 /* title文字區塊 */
 .title-text{    
-    background-color: lightblue;
+    position: relative;
+    bottom: 28px;
+    background-color: rgba(185, 195, 198, 0.5);
     font-size: 20px;
     text-align: center;
 }
