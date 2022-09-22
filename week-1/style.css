@@ -178,8 +178,9 @@
 
 /* title文字區塊 */
 .title-text{    
-    position: relative;
-    bottom: 28px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
     background-color: rgba(185, 195, 198, 0.5);
     font-size: 20px;
     text-align: center;
