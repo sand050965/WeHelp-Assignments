@@ -180,6 +180,8 @@
 .title-text{    
     position: absolute;
     bottom: 0px;
+    left: 0px;
+    right: 0px;    
     width: 100%;
     background-color: rgba(185, 195, 198, 0.5);
     font-size: 20px;
@@ -235,7 +237,7 @@
     .promotion-right{
         width: 100%;
         margin-left: 0%;
-        margin-bottom: 25px;
+        /* margin-bottom: 25px; */
     }
 
     .title-container-left{
@@ -251,13 +253,13 @@
     .title-left{
         width: 100%;
         margin-right: 0%;
-        margin-bottom: 50px;
+        margin-top: 50px;
     }
 
     .title-right{
         width: 100%;
         margin-left: 0%;
-        margin-bottom: 50px;
+        margin-top: 50px;
     }
 
 }
