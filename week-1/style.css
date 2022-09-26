@@ -1,7 +1,7 @@
 /* 1200px < 螢幕解析度的寬度 <= 1920px */
 
-/* 網頁上方標題和選單列 */
-.header{
+/* 網頁上方容器 */
+.header {
     display: flex;
     align-items: center;
     margin-left: -3px;
@@ -9,7 +9,7 @@
 }
 
 /* 網頁上方標題 */
-.header-text{
+.header-text {
     flex: none;
     width: 200px;
     font-size: 20px;
@@ -17,14 +17,14 @@
 }
 
 /* 所有選單 */
-.items{
+.items {
     flex: auto;
     display: flex;
     justify-content: flex-end;
 }
 
 /* 個別選單 */
-.item{
+.item {
     font-size: 20px;
     font-weight: bold;
     text-align: right;
@@ -32,20 +32,15 @@
     width: 100px;
 }
 
-/* 漢堡圖區塊 */
-.list{
-    flex: auto;
-    display: none;
-}
-
 /* 漢堡圖示 */
-.list-img{
+.list-img {
+    display: none;
     width: 28px;
     height: 28px;
 }
 
-/* 中間區塊 */
-.middle{
+/* 中間容器 */
+.middle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,211 +51,254 @@
 }
 
 /* 中間歡迎文字 */
-.middle-text{
+.middle-text {
     flex: none;
     font-size: 2em;
     font-weight: bold;
     text-align: center;
 }
 
-/* 主內容區塊 */
-.content-container{
-    display: flex;   
-    justify-content: center;   
-    margin-top: 50px;
+/* 主內容容器 */
+.content {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
 
-/* 主內容 */
-.content{ 
-    flex: none;
+/* 主內容格線(grid)容器 */
+.content-grid {
+    display: grid;
     width: 1200px;
+    grid-auto-columns: 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-gap: 20px;
 }
 
-/* promotion區塊 */
-.promotion{
+/* promotion容器 */
+.promotion1 {
     display: flex;
-    margin-bottom: 2%;
+    grid-column: 1/3;
+    grid-row: 1/2;
 }
 
-/* promotion左半側 */
-.promotion-left{
-    flex: none;
-    width: 48%;
-    height: 50px;
-    margin-right: 2%;
+.promotion2 {
     display: flex;
-}
-
-/* promotion右半側 */
-.promotion-right{
-    flex: none;
-    width: 48%;
-    height: 50px;
-    margin-left: 2%;
-    display: flex;
-}
-
-/* promotion圖片區塊 */
-.promotion-img-container{
-    flex: none;
-    width: 80px;
-    height: 50px;
+    grid-column: 3/5;
+    grid-row: 1/2;
 }
 
 /* promotion圖片 */
-.promotion-img{
-    width: 100%;
-    height: 100%;
+.promotion-img {
+    flex: none;
+    width: 80px;
+    height: 50px;
+    grid-column: 1/2;
+    grid-row: 1/2
 }
 
-/* promotion文字區塊 */
-.promotion-text{
+/* promotion文字 */
+.promotion-text {
     flex: auto;
     display: flex;
     align-items: center;
-    padding-left: 2%;
-    font-size: 20px;
+    padding-left: 10px;
     background-color: lightblue;
+    font-size: 20px;
 }
 
-/* title-container區塊 */
-.title-container{
-    display: flex;
-    margin-bottom: 50px;
-}
-
-/* title-container左半側 */
-.title-container-left{
-    flex: none;
-    width: 48%;
-    margin-right: 2%;
-    display: flex;
-}
-
-/* title-container右半側 */
-.title-container-right{
-    flex: none;
-    width: 48%;
-    margin-left: 2%;
-    display: flex;
-}
-
-/* title左半側 */
-.title-left{
-    flex: none;
-    width: 48%;
-    margin-right: 2%;
+/* title容器 */
+.title1 {
     position: relative;
+    grid-column: 1/2;
+    grid-row: 2/3;
 }
 
-/* title右半側 */
-.title-right{
-    flex: none;
-    width: 48%;
-    margin-left: 2%;
+.title2 {
     position: relative;
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.title3 {
+    position: relative;
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+
+.title4 {
+    position: relative;
+    grid-column: 4/5;
+    grid-row: 2/3;
+}
+
+.title5 {
+    position: relative;
+    grid-column: 1/2;
+    grid-row: 3/4;
+}
+
+.title6 {
+    position: relative;
+    grid-column: 2/3;
+    grid-row: 3/4;
+}
+
+.title7 {
+    position: relative;
+    grid-column: 3/4;
+    grid-row: 3/4;
+}
+
+.title8 {
+    position: relative;
+    grid-column: 4/5;
+    grid-row: 3/4;
 }
 
 /* title圖片 */
-.title-img{
+.title-img {
     width: 100%;
     height: 100%;
-}   
-
-/* 星星icon */
-.star-img{
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
 }
 
-/* title文字區塊 */
-.title-text{    
+/* title文字 */
+.title-text {
     display: flex;
     justify-content: center;
-    align-items: center;   
-    width: 100%;
-    height: 25%;
+    align-items: center;
     position: absolute;
     bottom: 0px;
+    width: 100%;
+    height: 25%;
     background-color: rgba(185, 195, 198, 0.5);
     font-size: 20px;
 }
 
+/* star icon */
+.star-img {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+}
+
 /* 600px < 螢幕解析度的寬度 <= 1200px */
-@media(max-width: 1200px){
-    .content{
+@media(max-width: 1200px) {
+    .content-grid {
         width: 90%;
     }
 
-    .title-container{
-        flex-wrap: wrap;
-        margin-bottom: 0%;
+    .promotion1 {
+        grid-column: 1/2;
+        grid-row: 1/2;
     }
 
-    .title-container-left{
-        width: 100%;
-        margin-right: 0%;
-        margin-bottom: 50px;
+    .promotion2 {
+        display: flex;
+        grid-column: 2/3;
+        grid-row: 1/2;
     }
 
-    .title-container-right{
-        width: 100%;
-        margin-left: 0%;
-        margin-bottom: 50px;
+    .title1 {
+        grid-column: 1/2;
+        grid-row: 2/3;
     }
+
+    .title2 {
+        grid-column: 2/3;
+        grid-row: 2/3;
+    }
+
+    .title3 {
+        grid-column: 1/2;
+        grid-row: 3/4;
+    }
+
+    .title4 {
+        grid-column: 2/3;
+        grid-row: 3/4;
+    }
+
+    .title5 {
+        grid-column: 1/2;
+        grid-row: 4/5;
+    }
+
+    .title6 {
+        grid-column: 2/3;
+        grid-row: 4/5;
+    }
+
+    .title7 {
+        grid-column: 1/2;
+        grid-row: 5/6;
+    }
+
+    .title8 {
+        grid-column: 2/3;
+        grid-row: 5/6;
+    }
+
 }
 
-@media(max-width: 600px){
-    .items{
+/* 300px < 螢幕解析度的寬度 <= 600px */
+@media(max-width: 600px) {
+    .item {
         display: none;
     }
-    
-    .list{  
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+
+    .list-img {
+        display: block;
     }
 
-    .promotion{
-        flex-wrap: wrap;
-        margin-bottom: 0%;
+    .promotion1 {
+        grid-column: 1/2;
+        grid-row: 1/2;
     }
 
-    .promotion-left{
-        width: 100%;
-        margin-right: 0%;
-        margin-bottom: 25px;
-    }
-    
-    .promotion-right{
-        width: 100%;
-        margin-left: 0%;
-        /* margin-bottom: 25px; */
+    .promotion2 {
+        grid-column: 1/2;
+        grid-row: 2/3;
     }
 
-    .title-container-left{
-        flex-wrap: wrap;
-        margin-bottom: 0%;
+    .title1 {
+        grid-column: 1/2;
+        grid-row: 3/4;
     }
 
-    .title-container-right{
-        flex-wrap: wrap;
-        margin-bottom: 0%;
+    .title2 {
+        grid-column: 1/2;
+        grid-row: 4/5;
     }
 
-    .title-left{
-        width: 100%;
-        margin-right: 0%;
-        margin-top: 50px;
+    .title3 {
+        grid-column: 1/2;
+        grid-row: 5/6;
     }
 
-    .title-right{
-        width: 100%;
-        margin-left: 0%;
-        margin-top: 50px;
+    .title4 {
+        grid-column: 1/2;
+        grid-row: 6/7;
     }
 
+    .title5 {
+        grid-column: 1/2;
+        grid-row: 7/8;
+    }
+
+    .title6 {
+        grid-column: 1/2;
+        grid-row: 8/9;
+    }
+
+    .title7 {
+        grid-column: 1/2;
+        grid-row: 9/10;
+    }
+
+    .title8 {
+        grid-column: 1/2;
+        grid-row: 10/11;
+    }
 }
