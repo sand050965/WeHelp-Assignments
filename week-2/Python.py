@@ -1,10 +1,11 @@
 # 要求一: 函式與流程控制
-# 完成以下函式，在函式中使用迴圈計算最小值到最大值之間，固定間隔的整數總和。其中你可 以假設 max 一定大於 min 且為整數，step 為正整數。
+# 完成以下函式，在函式中使用迴圈計算最小值到最大值之間，固定間隔的整數總和。其中你可以假設 max 一定大於 min 且為整數，step 為正整數。
 def calculate(min, max, step):
     result = 0
 
-    for i in range(min, max+step, step):
-        result += i
+    while min <= max:
+        result += min
+        min += step
 
     print(result)
 
