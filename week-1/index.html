@@ -9,7 +9,7 @@
     <title>My Website</title>
 </head>
 
-<body>
+<body onclick="closeSideMenu()">
     <div class="header">
         <div class="header-text">My Website</div>
         <div class="items">
@@ -17,8 +17,14 @@
             <div class="item">Item 2</div>
             <div class="item">Item 3</div>
             <div class="item">Item 4</div>
-            <img src="images/list.png" class="list-img" />
+            <div onclick="openSideMenu()"><img src="images/list.png" class="list-img" /></div>
         </div>
+    </div>
+    <div id="side-menu" class="side-menu">
+        <a>Item 1</a>
+        <a>Item 2</a>
+        <a>Item 3</a>
+        <a>Item 4</a>
     </div>
     <div class="middle">
         <div class="middle-text">Welcome to MyHome</div>
@@ -75,6 +81,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var sideMenu = document.getElementById("side-menu");
+
+        function openSideMenu() {
+            let event = window.event;
+            sideMenu.style.width = "250px";
+            event.stopPropagation();
+        }
+
+        function closeSideMenu() {
+            if (sideMenu.style.width  == "250px") {
+                sideMenu.style.width  = "0px";    
+            }
+        }
+    </script>
 </body>
 
 </html>
