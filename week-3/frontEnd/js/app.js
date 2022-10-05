@@ -155,7 +155,10 @@ let mediaQuery = () => {
     if (windowMobile.matches) { // 300px < 螢幕解析度的寬度 <= 600px 
 
         gridContainer.style.width = "90%";
+
+        // 調整grid網格大小按固定比例縮放
         titleGrid.setAttribute("style", "grid-auto-rows: calc(90vw * 3 / 4);");
+
         // 將item列表隱藏，並顯示漢堡圖
         items.children[0].setAttribute("style", "display: none;");
         items.children[1].setAttribute("style", "display: none;");
@@ -164,12 +167,12 @@ let mediaQuery = () => {
         lisImg.setAttribute("style", "display: block;");
 
         //  調整按鈕css屬性
-        btn.style.fontSize="15px";
-        btn.style.paddingTop="10px";
-        btn.style.paddingBottom="10px";
-        btn.style.paddingLeft="30px";
-        btn.style.paddingRight="30px";
-        
+        btn.style.paddingTop = "10px";
+        btn.style.paddingBottom = "10px";
+        btn.style.paddingLeft = "30px";
+        btn.style.paddingRight = "30px";
+        btn.style.fontSize = "15px";
+
 
         for (let i = 0; i < cnt; i++) {
             if (i <= 1) { // 計算promotion區塊的grid格線位置
@@ -183,8 +186,18 @@ let mediaQuery = () => {
         }
 
     } else if (windowPad.matches) { // 600px < 螢幕解析度的寬度 <= 1200px
+
         gridContainer.style.width = "90%";
+
+        // 調整grid網格大小按固定比例縮放
         titleGrid.setAttribute("style", "grid-auto-rows: calc(((90vw - 20px) / 2) * 3 / 4);");
+
+        //  調整按鈕css屬性
+        btn.style.paddingTop = "15px";
+        btn.style.paddingBottom = "15px";
+        btn.style.paddingLeft = "45px";
+        btn.style.paddingRight = "45px";
+        btn.style.fontSize = "15px";
 
         if (cnt < 2) {
             return;
@@ -198,7 +211,17 @@ let mediaQuery = () => {
 
     } else { // 螢幕解析度的寬度 > 1200px
         gridContainer.style.width = "1200px";
-        titleGrid.setAttribute("style", "grid-auto-rows: calc((1140px/4)*3/4)");;
+
+        // 調整grid網格大小按固定比例縮放
+        titleGrid.setAttribute("style", "grid-auto-rows: calc((1140px/4)*3/4)");
+
+        //  調整按鈕css屬性
+        btn.style.paddingTop = "20px";
+        btn.style.paddingBottom = "20px";
+        btn.style.paddingLeft = "60px";
+        btn.style.paddingRight = "60px";
+        btn.style.fontSize = "20px";
+
         for (let i = 0; i < cnt; i++) {
             if (i <= 1) { // 計算promotion區塊的grid格線位置
                 let ePromotion = document.getElementById("promotion" + i);
