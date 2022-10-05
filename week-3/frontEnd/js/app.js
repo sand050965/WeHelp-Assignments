@@ -4,7 +4,7 @@ let items = document.getElementById("items");
 let gridContainer = document.getElementById("grid-container");
 let lisImg = document.querySelector(".list-img");
 let titleGrid = document.querySelector(".title-grid");
-let imgProportion = 285 / 276.2;
+let btn = document.querySelector(".btn");
 
 // 側拉選單
 let sideMenu = document.getElementById("side-menu");
@@ -162,6 +162,14 @@ let mediaQuery = () => {
         items.children[2].setAttribute("style", "display: none;");
         items.children[3].setAttribute("style", "display: none;");
         lisImg.setAttribute("style", "display: block;");
+
+        //  調整按鈕css屬性
+        btn.style.fontSize="15px";
+        btn.style.paddingTop="10px";
+        btn.style.paddingBottom="10px";
+        btn.style.paddingLeft="30px";
+        btn.style.paddingRight="30px";
+        
 
         for (let i = 0; i < cnt; i++) {
             if (i <= 1) { // 計算promotion區塊的grid格線位置
