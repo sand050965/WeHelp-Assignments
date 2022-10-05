@@ -128,8 +128,8 @@ let loadMore = () => {
 
 // 滑鼠移入按鈕
 let over = (e) => {
-    e.style.backgroundColor = "grey";
-
+    e.style.backgroundColor = "rgb(234, 231, 231)";
+    
 }
 
 // 滑鼠移出按鈕
@@ -140,11 +140,13 @@ let out = (e) => {
 // 滑鼠按下按鈕
 let down = (e) => {
     e.style.fontWeight = "bold";
+    btn.setAttribute("style", "outline: solid 5px; background-color: grey;");
 }
 
 // 滑鼠放開按鈕
 let up = (e) => {
     e.style.fontWeight = "normal";
+    btn.setAttribute("style", "outline: solid 3px;");
 }
 
 
