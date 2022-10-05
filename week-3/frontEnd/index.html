@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>My Website</title>
+</head>
+
+<body onclick="closeSideMenu()">
+    <div class="header">
+        <div class="header-text">My Website</div>
+        <div id="items" class="items">
+            <div class="item">Item 1</div>
+            <div class="item">Item 2</div>
+            <div class="item">Item 3</div>
+            <div class="item">Item 4</div>
+            <div onclick="openSideMenu()"><img src="images/list.png" id="list-img" class="list-img" /></div>
+        </div>
+    </div>
+    <div id="side-menu" class="side-menu">
+        <a>Item 1</a>
+        <a>Item 2</a>
+        <a>Item 3</a>
+        <a>Item 4</a>
+    </div>
+    <div class="middle">
+        <div class="middle-text">Welcome to MyHome</div>
+    </div>
+    <div class="content">
+        <div id="grid-container" class="grid-container">
+            <div id="promotion-grid" class="promotion-grid"></div>
+            <div id="title-grid" class="title-grid"></div>
+        </div>
+    </div>
+    <div id="button" class="button"><span class="btn" onclick="loadMore()" onmouseOver="over(this)"
+            onmouseOut="out(this)" onmouseDown="down(this)" onmouseUp="up(this)">Load More</span></div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
