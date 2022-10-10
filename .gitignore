@@ -1,0 +1,10 @@
+# OS or Editor folders
+.DS_Store
+.vscode/
+
+# Python compiled files
+__pycache__/
+
+
+# Files to ignore
+*.pdf
