@@ -7,11 +7,13 @@ from flask import session  # 載入 session 物件
 #  建立 application 物件
 app = Flask(__name__)
 
+app.secret_key = "secret_key"
+
 # 處理路徑 / 對應的處理函式
 @app.route("/")
 def index():
     if ("username" in session):
-        return render_template("member.html")
+        return redirect("/member")
     return render_template("index.html")
 
 
