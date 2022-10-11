@@ -7,8 +7,6 @@ from flask import session  # 載入 session 物件
 #  建立 application 物件
 app = Flask(__name__)
 
-app.secret_key = "secret_key"
-
 # 處理路徑 / 對應的處理函式
 @app.route("/")
 def index():
@@ -60,16 +58,10 @@ def doError():
     message = request.args.get("message", "")
     return render_template("error.html", errorMessage=message)
 
-# 處理路徑 /square 對應的處理函式
-@ app.route("/square", methods=["POST"])
-def doSquare():
-    num = request.form["num"]
-    return redirect("/square/" + num)
-
 # 動態路由: 處理路徑 /square/傳入正整數 對應的處理函式
-@ app.route("/square/<num>")
-def doCalcSquare(num):
-    squareResult = int(num) ** 2
+@ app.route("/square/<input_num>")
+def doCalcSquare(input_num):
+    squareResult = int(input_num) ** 2
     return render_template("square.html", result=str(squareResult))
 
 

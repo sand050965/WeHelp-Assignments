@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -79,7 +78,15 @@
             padding-left: 15px;
         }
     </style>
+    <script>
+        let calcSquare = () => {
+            let inputNum = document.getElementById("num").value;
+            let url = "/square/" + inputNum;
+            window.location = url;
+        }
+    </script>
 </head>
+
 <body>
     <header class="header">歡迎光臨，請輸入帳號密碼</header>
     <div class="title">登入系統</div>
@@ -96,13 +103,11 @@
     </form>
     <hr />
     <div class="square-title">計算正整數的平方</div>
-    <form action="/square" method="POST">
-        <div class="login">
-            <span>正整數</span>
-            <input type="text" name="num"></input>
-        </div>
-        <div class="btn"><button>計算</button></div>
-    </form>
+    <div class="login">
+        <span>正整數</span>
+        <input type="text" id="num"></input>
+    </div>
+    <div class="btn" onclick="calcSquare()"><button>計算</button></div>
 </body>
 
 </html>
