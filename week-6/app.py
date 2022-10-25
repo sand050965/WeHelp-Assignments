@@ -51,10 +51,8 @@ def doSignUp():
     if (len(result) != 0):
         return redirect(url_for('doError', message=msg))
     else:
-        mycursor.execute("SELECT MAX(id) FROM member")
-        id = mycursor.fetchone()
-        sql = "INSERT INTO member (id, name, username, password) VALUES (%s, %s, %s, %s)"
-        val = (id[0]+1, name, acct, pwd)
+        sql = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
+        val = (name, acct, pwd)
         mycursor.execute(sql, val)
         mydb.commit()
         return redirect("/")
@@ -113,26 +111,18 @@ def doSignOut():
     return redirect("/")
 
 # 處理路徑 /error 對應的處理函式
-
-
 @app.route("/error")
 def doError():
     message = request.args.get("message", "")
     return render_template("error.html", errorMessage=message)
 
 # 處理路徑 /message 對應的處理函式
-
-
 @app.route("/message", methods=["POST"])
 def doMessage():
     comment = request.form["comment"]
-    name = session["name"]
 
-    mycursor.execute("SELECT MAX(id) FROM message")
-    id = mycursor.fetchone()
-
-    sql = "INSERT INTO message (id, member_id, content) VALUES (%s, %s, %s)"
-    val = (id[0]+1, session["id"], comment)
+    sql = "INSERT INTO message (member_id, content) VALUES (%s, %s)"
+    val = (session["id"], comment)
 
     mycursor.execute(sql, val)
     mydb.commit()
