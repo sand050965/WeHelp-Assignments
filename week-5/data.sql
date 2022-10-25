@@ -29,7 +29,8 @@ CREATE TABLE `like_detail` (
   `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '按讚時間',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UC_like_detail` (`member_id`,`message_id`),
-  KEY `message_id` (`message_id`),
+  KEY `memberId_idx` (`member_id`),
+  KEY `messageIn_idx` (`message_id`),
   CONSTRAINT `like_detail_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`),
   CONSTRAINT `like_detail_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `message` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -129,4 +130,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-25 16:53:00
+-- Dump completed on 2022-10-25 19:01:28

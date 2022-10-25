@@ -138,14 +138,18 @@
 ### 1.建立 like_detail 資料表，以紀錄會員對留言的按讚紀錄，並對’按讚會員id‘及‘按讚留言id’設定UNIQUE限制，使得同一會員無法對同一則留言重複按讚
 ![](images/e1.png)
 &emsp;
+
+- (為了優化搜尋效能，所以有補加 member_id 跟 message_id 的 INDEX)
+![](images/e2.png)
+&emsp;
  
  ### 2.建立 trigger ，使 like_detail 資料表可以與 message 資料表進行連動，當 like_detail 資料表成功新增一筆資料，message 資料表中對應留言編號的按讚數會自動 +1
- ![](images/e2.png)
+ ![](images/e3.png)
 &emsp;
 
  ### 3.對 like_detail 資料表新增資料，結果符合預期，無法新增同會員重複按讚同一則留言的資料，且新增成功後，message 資料表中對應留言的讚數連動增加
  - 新增資料到 like_detail 資料表前，message 資料表的讚數，第一、二則留言讚數分別為： 100, 1024
- ![](images/e3.png)
+ ![](images/e4.png)
 &emsp;
 
  - 新增資料到 like_dtail，可以看到資料表能成功新增同一會員對不同留言按讚的資料，但如果新增同一會員對同一留言按讚的資料，則會新增失敗
