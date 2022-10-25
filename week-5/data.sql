@@ -16,6 +16,53 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `like_detail`
+--
+
+DROP TABLE IF EXISTS `like_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `like_detail` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '按讚資料編號',
+  `member_id` bigint NOT NULL COMMENT '按讚會員id',
+  `message_id` bigint NOT NULL COMMENT '按讚留言id',
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '按讚時間',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UC_like_detail` (`member_id`,`message_id`),
+  KEY `message_id` (`message_id`),
+  CONSTRAINT `like_detail_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`),
+  CONSTRAINT `like_detail_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `message` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `like_detail`
+--
+
+LOCK TABLES `like_detail` WRITE;
+/*!40000 ALTER TABLE `like_detail` DISABLE KEYS */;
+INSERT INTO `like_detail` VALUES (1,1,1,'2022-10-25 16:13:03'),(2,1,2,'2022-10-25 16:13:17');
+/*!40000 ALTER TABLE `like_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_message_like_count` AFTER INSERT ON `like_detail` FOR EACH ROW UPDATE message
+SET like_count= like_count+1
+WHERE id = NEW.message_id */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Table structure for table `member`
 --
 
@@ -69,7 +116,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,3,'Good~Good~',100,'2022-10-17 20:21:26'),(2,1,'Exellent!!!',1240,'2022-10-17 20:21:35'),(3,1,'AWESOME',332,'2022-10-17 20:21:43'),(4,8,'One Of A Kind!',520,'2022-10-17 20:21:51'),(5,1,'Hello World!',728,'2022-10-17 20:21:59'),(6,4,'I Hate U',593,'2022-10-17 20:22:06'),(7,4,'Bad~Bad~',100,'2022-10-17 20:22:13'),(8,7,'I Like It~^^',982,'2022-10-17 20:22:20'),(9,2,'YOLO~~~~',493,'2022-10-17 20:22:27'),(10,3,'SHY~SHY~SHY~',777,'2022-10-17 20:22:34'),(11,5,'Whats UP!!',135,'2022-10-17 20:22:41'),(12,6,'Let it go~~',951,'2022-10-17 20:22:49'),(13,1,'Lovely~><',1141,'2022-10-17 20:22:56');
+INSERT INTO `message` VALUES (1,3,'Good~Good~',101,'2022-10-25 16:13:03'),(2,1,'Exellent!!!',1241,'2022-10-25 16:13:17'),(3,1,'AWESOME',332,'2022-10-17 20:21:43'),(4,8,'One Of A Kind!',520,'2022-10-17 20:21:51'),(5,1,'Hello World!',728,'2022-10-17 20:21:59'),(6,4,'I Hate U',593,'2022-10-17 20:22:06'),(7,4,'Bad~Bad~',100,'2022-10-17 20:22:13'),(8,7,'I Like It~^^',982,'2022-10-17 20:22:20'),(9,2,'YOLO~~~~',493,'2022-10-17 20:22:27'),(10,3,'SHY~SHY~SHY~',777,'2022-10-17 20:22:34'),(11,5,'Whats UP!!',135,'2022-10-17 20:22:41'),(12,6,'Let it go~~',951,'2022-10-17 20:22:49'),(13,1,'Lovely~><',1141,'2022-10-17 20:22:56');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -82,4 +129,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-17 21:15:51
+-- Dump completed on 2022-10-25 16:53:00

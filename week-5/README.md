@@ -125,6 +125,46 @@
 ![](images/Q5-4.png)
 &emsp;
 
-### 使用 mysqldump 匯出資料
+---
 
+## EXTRA:
+
+### 紀錄每一個留言的按讚會員是誰，並支援以下使用場合：
+
+- 可以根據留言編號取得該留言有哪些會員按讚。
+- 會員若是嘗試對留言按讚：要能先檢查是否曾經按過讚，然後才將按讚的數量 +1 並且記錄按讚的會員是誰。
+&emsp;
+
+### 1.建立 like_detail 資料表，以紀錄會員對留言的按讚紀錄，並對’按讚會員id‘及‘按讚留言id’設定UNIQUE限制，使得同一會員無法對同一則留言重複按讚
+![](images/e1.png)
+&emsp;
+ 
+ ### 2.建立 trigger ，使 like_detail 資料表可以與 message 資料表進行連動，當 like_detail 資料表成功新增一筆資料，message 資料表中對應留言編號的按讚數會自動 +1
+ ![](images/e2.png)
+&emsp;
+
+ ### 3.對 like_detail 資料表新增資料，結果符合預期，無法新增同會員重複按讚同一則留言的資料，且新增成功後，message 資料表中對應留言的讚數連動增加
+ - 新增資料到 like_detail 資料表前，message 資料表的讚數，第一、二則留言讚數分別為： 100, 1024
+ ![](images/e3.png)
+&emsp;
+
+ - 新增資料到 like_dtail，可以看到資料表能成功新增同一會員對不同留言按讚的資料，但如果新增同一會員對同一留言按讚的資料，則會新增失敗
+ ![](images/e5.png)
+&emsp;
+
+  - 新增資料到 like_detail 資料表後，message 資料表的讚數，可以看到第一、二則留言讚數皆增加1，分別為: 101, 1025
+ ![](images/e6.png)
+ &emsp;
+
+---
+
+### ERD (Entity Relationship Diagram)
+![](images/e7.png)
+&emsp;
+
+---
+
+### 使用 mysqldump 匯出資料
 ![](images/mysqldump.png)
+
+
