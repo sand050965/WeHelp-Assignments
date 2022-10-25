@@ -4,17 +4,23 @@ from flask import Response  # 載入 Response 物件
 from flask import make_response # 載入 make_response 物件
 from flask import redirect  # 載入 redirect 物件
 from flask import render_template  # 載入 render_template 物件
+from cryptography.fernet import Fernet # 載入 fernet 物件
 
 #  建立 application 物件
 app = Flask(__name__)
 
-app.secret_key = "secret_key"
+# 產生密鑰
+key = Fernet.generate_key()
+f = Fernet(key)
 
 # 處理路徑 / 對應的處理函式
 @app.route("/")
 def index():
     if ("username" in request.cookies):
-        return redirect("/member")
+        if(f.decrypt(request.cookies.get("username")) == b'test'):
+            return redirect("/member")
+        else:
+            return render_template("index.html")
     return render_template("index.html")
 
 
@@ -25,16 +31,17 @@ def doSignIn():
     acct = request.form["acct"]
     # 接收 POST 方法的 Query String
     pwd = request.form["pwd"]
-    str = "test"
+    strAcct = "test"
     blankStr = ""
-    if (acct == str and pwd == str):
+    if (acct == strAcct and pwd == strAcct):
         response = make_response(redirect("/member"))  # 導向到路徑 /member
-        response.set_cookie("username", acct)  # 將資料存入 cookie
+        token = f.encrypt(str.encode(acct)) # 對資料進行加密
+        response.set_cookie("username", token)  # 將加密後的資料存入 cookie
         return response
     elif (acct.strip() == blankStr or pwd.strip() == blankStr):
         msg = "請輸入帳號、密碼"
         return redirect("/error?message=" + msg)
-    elif (acct != str or pwd != str):
+    elif (acct != strAcct or pwd != strAcct):
         msg = "帳號、或密碼輸入錯誤"
         return redirect("/error?message=" + msg)
 
@@ -42,7 +49,7 @@ def doSignIn():
 # 處理路徑 /member 對應的處理函式
 @ app.route("/member")
 def doMember():
-    if ("username" in request.cookies):
+    if (f.decrypt(request.cookies.get("username")) == b'test'):
         return render_template("member.html")
     return redirect("/")
 
