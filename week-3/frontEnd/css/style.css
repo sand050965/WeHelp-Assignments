@@ -2,179 +2,179 @@
 
 /* 網頁上方容器 */
 .header {
-    display: flex;
-    align-items: center;
-    margin-left: -3px;
-    margin-right: -3px;
+  display: flex;
+  align-items: center;
+  margin-left: -3px;
+  margin-right: -3px;
 }
 
 /* 網頁上方標題 */
 .header-text {
-    flex: none;
-    width: 200px;
-    font-size: 20px;
-    font-weight: bold;
+  flex: none;
+  width: 200px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /* 所有選單 */
 .items {
-    flex: auto;
-    display: flex;
-    justify-content: flex-end;
+  flex: auto;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* 個別選單 */
 .item {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: right;
-    flex: none;
-    width: 100px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  flex: none;
+  width: 100px;
 }
 
 /* 漢堡圖示 */
 .list-img {
-    display: none;
-    width: 28px;
-    height: 28px;
+  display: none;
+  width: 28px;
+  height: 28px;
 }
 
 /* 側邊浮動的選單 */
 .side-menu {
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    width: 0px;
-    height: 100%;
-    background-color: white;
-    overflow-x: hidden;
-    z-index: 1;
-    transition: 0.5s;
-    padding-top: 10px;
-    /* box-shadow : x 軸 | y 軸| 模糊半徑 | 擴散距離 | 顏色 | (inset) */
-    box-shadow: -5px 0 10px 0px #888888;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 0px;
+  height: 100%;
+  background-color: white;
+  overflow-x: hidden;
+  z-index: 1;
+  transition: 0.5s;
+  padding-top: 10px;
+  /* box-shadow : x 軸 | y 軸| 模糊半徑 | 擴散距離 | 顏色 | (inset) */
+  box-shadow: -5px 0 10px 0px #888888;
 }
 
 .side-menu a {
-    padding: 15px 10px 15px 10px;
-    font-size: 20px;
-    text-align: center;
-    display: block;
-    transition: 0.3s;
+  padding: 15px 10px 15px 10px;
+  font-size: 20px;
+  text-align: center;
+  display: block;
+  transition: 0.3s;
 }
 
 .side-menu a:hover {
-    color: #f1f1f1;
+  color: #f1f1f1;
 }
 
 /* 中間容器 */
 .middle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    margin-left: -10px;
-    margin-right: -10px;
-    background-color: rgb(204, 221, 232);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  margin-left: -10px;
+  margin-right: -10px;
+  background-color: rgb(204, 221, 232);
 }
 
 /* 中間歡迎文字 */
 .middle-text {
-    flex: none;
-    font-size: 2em;
-    font-weight: bold;
-    text-align: center;
+  flex: none;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
 }
 
 /* 主內容容器 */
 .content {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 /* title、promtion的外層grid容器 */
 .grid-container {
-    width: 1200px;
+  width: 1200px;
 }
 
 /* promotion格線(grid)容器 */
 .promotion-grid {
-    display: grid;
-    grid-auto-columns: 1fr;
-    grid-auto-rows: 50px;
-    grid-gap: 20px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 50px;
+  grid-gap: 20px;
+  margin-bottom: 20px;
 }
 
 /* promotion圖片 */
 .promotion-img {
-    flex: none;
-    width: 80px;
-    height: 50px;
-    grid-column: 1/2;
-    grid-row: 1/2
+  flex: none;
+  width: 80px;
+  height: 50px;
+  grid-column: 1/2;
+  grid-row: 1/2;
 }
 
 /* promotion文字 */
 .promotion-text {
-    flex: auto;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    background-color: rgb(204, 221, 232);
-    height: 50px;
-    font-size: 20px;
+  flex: auto;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  background-color: rgb(204, 221, 232);
+  height: 50px;
+  font-size: 20px;
 }
 
 /* title格線(grid)容器 */
 .title-grid {
-    display: grid;
-    grid-auto-columns: 1fr;
-    grid-auto-rows: calc((1140px / 4) * 3 / 4);
-    grid-gap: 20px;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: calc((1140px / 4) * 3 / 4);
+  grid-gap: 20px;
 }
 
 /* title圖片容器 */
 .title-img-container {
-    height: 75%;
+  height: 75%;
 }
 
 /* title圖片 */
 .title-img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* title文字 */
 .title-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 25%;
-    background-color: rgb(204, 221, 232);
-    font-size: 20px;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 25%;
+  background-color: rgb(204, 221, 232);
+  font-size: 20px;
+  text-align: center;
 }
 
 /* 按鈕區塊 */
 .button {
-    display: flex;
-    justify-content: center;
-    padding: 100px;
+  display: flex;
+  justify-content: center;
+  padding: 100px;
 }
 
 /* 按鈕樣式 */
 .btn {
-    outline: solid 3px;
-    background-color: lightgrey;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 60px;
-    padding-right: 60px;
-    border-radius: 5px;
-    font-size: 20px;
-    font-style: normal;
-    cursor: pointer;
+  outline: solid 3px;
+  background-color: lightgrey;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 60px;
+  padding-right: 60px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-style: normal;
+  cursor: pointer;
 }

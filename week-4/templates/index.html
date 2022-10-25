@@ -1,113 +1,115 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Sign in to Member Area - MyPage</title>
     <style>
-        .header {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-            width: 100vw;
-            height: 100px;
-            line-height: 100px;
-            font-size: 2em;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #223344;
-        }
+      .header {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100px;
+        line-height: 100px;
+        font-size: 2em;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #223344;
+      }
 
-        .title {
-            position: relative;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em;
-            font-weight: bold;
-            margin-top: 150px;
-            margin-bottom: 25px;
-        }
+      .title {
+        position: relative;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        font-weight: bold;
+        margin-top: 150px;
+        margin-bottom: 25px;
+      }
 
-        .square-title {
-            position: relative;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em;
-            font-weight: bold;
-            margin-top: 50px;
-            margin-bottom: 25px;
-        }
+      .square-title {
+        position: relative;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        font-weight: bold;
+        margin-top: 50px;
+        margin-bottom: 25px;
+      }
 
-        .login {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            font-size: 1.8em;
-            margin: 10px;
-        }
+      .login {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        font-size: 1.8em;
+        margin: 10px;
+      }
 
-        span {
-            margin-right: 20px;
-        }
+      span {
+        margin-right: 20px;
+      }
 
-        input {
-            width: 300px;
-            font-size: 20px;
-        }
+      input {
+        width: 300px;
+        font-size: 20px;
+      }
 
-        .btn {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 50px;
-        }
+      .btn {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 50px;
+      }
 
-        button {
-            font-size: 1.2em;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-right: 15px;
-            padding-left: 15px;
-        }
+      button {
+        font-size: 1.2em;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 15px;
+        padding-left: 15px;
+      }
     </style>
     <script>
-        let calcSquare = () => {
-            let inputNum = document.getElementById("num").value;
-            let url = "/square/" + inputNum;
-            window.location = url;
-        }
+      let calcSquare = () => {
+        let inputNum = document.getElementById("num").value;
+        let url = "/square/" + inputNum;
+        window.location = url;
+      };
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="header">歡迎光臨，請輸入帳號密碼</header>
     <div class="title">登入系統</div>
     <form action="/signin" method="POST">
-        <div class="login">
-            <span>帳號</span>
-            <input type="text" name="acct"></input>
-        </div>
-        <div class="login">
-            <span>密碼</span>
-            <input type="password" name="pwd"></input>
-        </div>
-        <div class="btn"><button>登入</button></div>
+      <div class="login">
+        <span>帳號</span>
+        <input type="text" name="acct" />
+      </div>
+      <div class="login">
+        <span>密碼</span>
+        <input type="password" name="pwd" />
+      </div>
+      <div class="btn"><button>登入</button></div>
     </form>
     <hr />
     <div class="square-title">計算正整數的平方</div>
     <div class="login">
-        <span>正整數</span>
-        <input type="text" id="num"></input>
+      <span>正整數</span>
+      <input type="text" id="num" />
     </div>
     <div class="btn" onclick="calcSquare()"><button>計算</button></div>
-</body>
-
+  </body>
 </html>
