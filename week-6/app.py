@@ -1,28 +1,33 @@
-from flask import Flask  # 載入flask
-from flask import request  # 載入 Request 物件
-from flask import redirect  # 載入 redirect 物件
-from flask import render_template  # 載入 render_template 物件
-from flask import session  # 載入 session 物件
-from flask import url_for  # 載入 url_for 物件
-import mysql.connector  # 載入 mysql 連線套件
+from flask import Flask
+from flask import request
+from flask import redirect
+from flask import render_template
+from flask import session
+from flask import url_for
+import mysql.connector
 
-#  建立 application 物件
 app = Flask(__name__)
 
 app.secret_key = "secret_key"
 
-#  建立 mysql 資料庫連線物件
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="****",
-    database="website"
-)
+dbconfig = {
+    "host": "localhost",
+    "user": "root",
+    "password": "****",
+    "database": "website"
+}
 
-mycursor = mydb.cursor()
+connect_pool = mysql.connector.pooling.MySQLConnectionPool(
+    pool_name="mypool",
+    pool_size=3,
+    **dbconfig)
+
+db = connect_pool.get_connection()
+
+if (db.is_connected()):
+    mycursor = db.cursor()
 
 
-# 處理路徑 / 對應的處理函式
 @app.route("/")
 def index():
     if ("username" in session):
@@ -30,69 +35,55 @@ def index():
     return render_template("index.html")
 
 
-# 使用 POST 方法，處理路徑 /signup 對應的處理函式
 @app.route("/signup", methods=["POST"])
 def doSignUp():
     name = request.form["name"]
-    acct = request.form["acct"]
-    pwd = request.form["pwd"]
-    blankStr = ""
-    msg = "帳號已經被註冊"
-    msgNone = "請輸入註冊姓名、帳號、密碼"
+    username = request.form["username"]
+    password = request.form["password"]
 
-    if (name == blankStr or acct == blankStr or pwd == blankStr):
-        return redirect(url_for('doError', message=msgNone))
+    if (name == "" or username == "" or password == ""):
+        return redirect(url_for('doError', message="請輸入註冊姓名、帳號、密碼"))
 
     mycursor.execute(
-        "SELECT username FROM member WHERE username = %s", (acct,))
+        "SELECT username FROM member WHERE username = %s", (username,))
 
     result = mycursor.fetchall()
 
     if (len(result) != 0):
-        return redirect(url_for('doError', message=msg))
+        return redirect(url_for('doError', message="帳號已經被註冊"))
     else:
-        sql = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
-        val = (name, acct, pwd)
-        mycursor.execute(sql, val)
-        mydb.commit()
+        mycursor.execute(
+            "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
+        db.commit()
         return redirect("/")
 
 
-# 使用 POST 方法，處理路徑 /signin 對應的處理函式
 @app.route("/signin", methods=["POST"])
 def doSignIn():
-    # 接收 POST 方法的 Query String
-    acct = request.form["acct"]
-    # 接收 POST 方法的 Query String
-    pwd = request.form["pwd"]
-    blankStr = ""
+    username = request.form["username"]
+    password = request.form["password"]
 
-    if (acct.strip() == blankStr or pwd.strip() == blankStr):
+    if (username.strip() == "" or password.strip() == ""):
         session.pop("username", None)
-        msg = "請輸入帳號、密碼"
-        return redirect(url_for('doError', message=msg))
+        return redirect(url_for('doError', message="請輸入帳號、密碼"))
 
     mycursor.execute(
-        "SELECT id, name FROM member WHERE username = %s and password = %s", (acct, pwd))
+        "SELECT id, name FROM member WHERE username = %s and password = %s", (username, password))
 
     result = mycursor.fetchone()
 
     if (result != None):
         id = result[0]
         name = result[1]
-        # session["欄位名稱"] = 資料
         session["id"] = id
-        session["username"] = acct
+        session["username"] = username
         session["name"] = name
-        # 導向到路徑 /member
         return redirect('/member')
     else:
         session.clear()
-        msg = "帳號、或密碼輸入錯誤"
-        return redirect("/error?message=" + msg)
+        return redirect(url_for('doError', message="帳號、或密碼輸入錯誤"))
 
 
-# 處理路徑 /member 對應的處理函式
 @app.route("/member")
 def doMember():
     if ("username" in session):
@@ -103,32 +94,28 @@ def doMember():
     return redirect("/")
 
 
-# 使用 GET 方法，處理路徑 /signout 對應的處理函式
 @app.route("/signout", methods=["GET"])
 def doSignOut():
     # clean session
     session.clear()
     return redirect("/")
 
-# 處理路徑 /error 對應的處理函式
+
 @app.route("/error")
 def doError():
     message = request.args.get("message", "")
     return render_template("error.html", errorMessage=message)
 
-# 處理路徑 /message 對應的處理函式
+
 @app.route("/message", methods=["POST"])
 def doMessage():
     comment = request.form["comment"]
 
-    sql = "INSERT INTO message (member_id, content) VALUES (%s, %s)"
-    val = (session["id"], comment)
-
-    mycursor.execute(sql, val)
-    mydb.commit()
+    mycursor.execute(
+        "INSERT INTO message (member_id, content) VALUES (%s, %s)", (session["id"], comment))
+    db.commit()
 
     return redirect("/member")
 
 
-# 啟動網站伺服器，可透過 port 參數指定埠號
 app.run(port=3000)
