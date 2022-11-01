@@ -5,7 +5,7 @@ from flask import redirect
 from flask import render_template
 from flask import session
 from flask import url_for
-import json
+from flask import jsonify
 import mysql.connector
 
 app = Flask(__name__)
@@ -97,55 +97,54 @@ def doMember():
 
 @app.route("/api/member", methods=["GET", "PATCH"])
 def doAPIMember():
-    if ("username" not in session):
-        return redirect("/")
-
     if (request.method == "GET"):
         try:
-            queryUserName = request.args.get('username')
-            mycursor.execute(
-                "SELECT id, name, username FROM member WHERE username = %s", (queryUserName,))
-            result = mycursor.fetchone()
+            if ("username" in session):
+                queryUserName = request.args.get('username')
+                mycursor.execute(
+                    "SELECT id, name, username FROM member WHERE username = %s", (queryUserName,))
+                result = mycursor.fetchone()
 
-            if (result != None):
-                return json.dumps({
-                    "data": {
-                        "id": result[0],
-                        "name": result[1],
-                        "username": result[2]
-                    }
-                })
-            else:
-                return json.dumps({
-                    "data": None
-                })
+                if (result != None):
+                    return jsonify({
+                        "data": {
+                            "id": result[0],
+                            "name": result[1],
+                            "username": result[2]
+                        }
+                    })
+
+            return jsonify({
+                "data": None
+            })
 
         except:
-            return json.dumps({
+            return jsonify({
                 "data": None
             })
 
     elif (request.method == "PATCH"):
         try:
-            data = request.get_json()
-            updateName = data["name"]
+            if ("username" in session):
+                data = request.get_json()
+                updateName = data["name"]
 
-            if (updateName != None and updateName != ""):
-                username = session["username"]
-                mycursor.execute(
-                    "UPDATE member SET name = %s WHERE username = %s", (updateName, username))
-                db.commit()
-                session["name"] = updateName
-                return json.dumps({
-                    "ok": True
-                })
-            else:
-                return json.dumps({
-                    "err": True
-                })
+                if (updateName != None and updateName != ""):
+                    username = session["username"]
+                    mycursor.execute(
+                        "UPDATE member SET name = %s WHERE username = %s", (updateName, username))
+                    db.commit()
+                    session["name"] = updateName
+                    return jsonify({
+                        "ok": True
+                    })
+
+            return jsonify({
+                "err": True
+            })
 
         except:
-            return json.dumps({
+            return jsonify({
                 "err": True
             })
 
