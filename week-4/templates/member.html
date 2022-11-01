@@ -8,38 +8,10 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Member Area - MyPage</title>
-    <style>
-      .header {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        display: grid;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        height: 100px;
-        line-height: 100px;
-        font-size: 2em;
-        font-weight: bold;
-        color: #ffffff;
-        background-color: #223344;
-      }
-
-      .log-in {
-        display: grid;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.8em;
-        margin-top: 150px;
-        margin-bottom: 10px;
-      }
-
-      .log-out {
-        font-size: 1.8em;
-        text-align: center;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/member.css') }}"
+    />
   </head>
 
   <body>
