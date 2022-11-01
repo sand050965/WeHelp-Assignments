@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Sign in to Member Area - MyPage</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/index.css') }}"
+    />
+  </head>
+
+  <body>
+    <header class="header">歡迎光臨，請輸入帳號密碼</header>
+    <div class="title">註冊帳號</div>
+    <form action="/signup" method="POST">
+      <div class="login">
+        <span>姓名</span>
+        <input type="text" name="name" />
+      </div>
+      <div class="login">
+        <span>帳號</span>
+        <input type="text" name="username" />
+      </div>
+      <div class="login">
+        <span>密碼</span>
+        <input type="password" name="password" />
+      </div>
+      <div class="btn"><button>註冊</button></div>
+    </form>
+    <hr />
+    <div class="title">登入系統</div>
+    <form action="/signin" method="POST">
+      <div class="login">
+        <span>帳號</span>
+        <input type="text" name="username" />
+      </div>
+      <div class="login">
+        <span>密碼</span>
+        <input type="password" name="password" />
+      </div>
+      <div class="btn"><button>登入</button></div>
+    </form>
+  </body>
+</html>

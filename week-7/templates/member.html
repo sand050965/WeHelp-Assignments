@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Member Area - MyPage</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/member.css') }}"
+    />
+    <script>
+      let query = () => {
+        let queryUserName = document
+          .querySelector("#queryUserName")
+          .value.trim();
+        let queryResult = document.querySelector("#queryResultName");
+        let src = "http://127.0.0.1:3000/api/member?username=";
+        fetch(src + queryUserName)
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.data != null) {
+              queryResult.innerText =
+                result.data.name + " (" + result.data.username + ")";
+            } else {
+              queryResult.innerText = "無此會員";
+            }
+          });
+      };
+
+      let update = () => {
+        let newName = document.querySelector("#newName").value.trim();
+        let updateResult = document.querySelector("#updateNameResult");
+        let src = "http://127.0.0.1:3000/api/member";
+        fetch(src, {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name: newName,
+          }),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (!result.ok) {
+              throw new Error(response.statusText);
+            }
+            updateResult.innerText = "更新成功";
+            document.querySelector("#logInName").innerText = newName;
+          })
+          .catch((err) => (updateResult.innerText = "更新失敗"));
+      };
+    </script>
+  </head>
+
+  <body>
+    <div class="header">歡迎光臨，這是會員頁</div>
+    <div id="logIn" class="log-in">
+      <span id="logInName">{{name}}</span>，歡迎登入系統
+    </div>
+    <div class="log-out"><a href="/signout" method="GET">登出系統</a></div>
+    <hr />
+    <div class="title">快來留言吧</div>
+    <form action="/message" , method="POST">
+      <div class="comment-container">
+        <span class="comment">內容</span>
+        <input type="text" name="comment" />
+      </div>
+      <div class="btn"><button>送出</button></div>
+    </form>
+    <hr />
+    <div>
+      {%for i in range(0, len)%}
+      <div class="content-list">
+        <span class="content-name">{{result[i][0]}} : </span>
+        <span class="content">{{result[i][1]}}</span>
+      </div>
+      {%endfor%}
+    </div>
+    <div class="title">查詢會員姓名</div>
+    <div class="query-container">
+      <input type="text" id="queryUserName" />
+      <span class="query-btn"><button onclick="query();">查詢</button></span>
+    </div>
+    <div id="queryResult">
+      <span id="queryResultName"></span>
+      <span id="queryResultUsername"></span>
+    </div>
+    <div class="title">更新我的姓名</div>
+    <div class="update-container">
+      <input type="text" id="newName" />
+      <span class="update-btn"><button onclick="update()">更新</button></span>
+    </div>
+    <div id="updateResult">
+      <span id="updateNameResult"></span>
+    </div>
+  </body>
+</html>
