@@ -22,11 +22,6 @@ connect_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_size=3,
     **dbconfig)
 
-db = connect_pool.get_connection()
-
-if (db.is_connected()):
-    mycursor = db.cursor()
-
 
 @app.route("/")
 def index():
@@ -44,18 +39,30 @@ def doSignUp():
     if (name == "" or username == "" or password == ""):
         return redirect(url_for('doError', message="請輸入註冊姓名、帳號、密碼"))
 
-    mycursor.execute(
-        "SELECT username FROM member WHERE username = %s", (username,))
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
 
-    result = mycursor.fetchall()
-
-    if (len(result) != 0):
-        return redirect(url_for('doError', message="帳號已經被註冊"))
-    else:
         mycursor.execute(
-            "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
-        db.commit()
-        return redirect("/")
+            "SELECT username FROM member WHERE username = %s", (username,))
+
+        result = mycursor.fetchall()
+
+        if (len(result) != 0):
+            return redirect(url_for('doError', message="帳號已經被註冊"))
+        else:
+            mycursor.execute(
+                "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
+            conn.commit()
+            return redirect("/")
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        mycursor.close()
+        conn.close()
 
 
 @app.route("/signin", methods=["POST"])
@@ -67,30 +74,53 @@ def doSignIn():
         session.pop("username", None)
         return redirect(url_for('doError', message="請輸入帳號、密碼"))
 
-    mycursor.execute(
-        "SELECT id, name FROM member WHERE username = %s and password = %s", (username, password))
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
+        mycursor.execute(
+            "SELECT id, name FROM member WHERE username = %s and password = %s", (username, password))
 
-    result = mycursor.fetchone()
+        result = mycursor.fetchone()
 
-    if (result != None):
-        id = result[0]
-        name = result[1]
-        session["id"] = id
-        session["username"] = username
-        session["name"] = name
-        return redirect('/member')
-    else:
-        session.clear()
-        return redirect(url_for('doError', message="帳號、或密碼輸入錯誤"))
+        if (result != None):
+            id = result[0]
+            name = result[1]
+            session["id"] = id
+            session["username"] = username
+            session["name"] = name
+            return redirect('/member')
+        else:
+            session.clear()
+            return redirect(url_for('doError', message="帳號、或密碼輸入錯誤"))
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        mycursor.close()
+        conn.close()
 
 
 @app.route("/member")
 def doMember():
     if ("username" in session):
-        mycursor.execute(
-            "SELECT member.name, message.content FROM message JOIN member ON member.id = message.member_id ORDER BY message.time DESC")
-        result = mycursor.fetchall()
-        return render_template("member.html", name=session["name"], len=len(result), result=result)
+        try:
+            conn = connect_pool.get_connection()
+            if (conn.is_connected()):
+                mycursor = conn.cursor()
+            mycursor.execute(
+                "SELECT member.name, message.content FROM message JOIN member ON member.id = message.member_id ORDER BY message.time DESC")
+            result = mycursor.fetchall()
+            return render_template("member.html", name=session["name"], len=len(result), result=result)
+
+        except Exception as e:
+            print(e)
+
+        finally:
+            mycursor.close()
+        conn.close()
+
     return redirect("/")
 
 
@@ -110,12 +140,22 @@ def doError():
 @app.route("/message", methods=["POST"])
 def doMessage():
     comment = request.form["comment"]
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
+        mycursor.execute(
+            "INSERT INTO message (member_id, content) VALUES (%s, %s)", (session["id"], comment))
+        conn.commit()
 
-    mycursor.execute(
-        "INSERT INTO message (member_id, content) VALUES (%s, %s)", (session["id"], comment))
-    db.commit()
-
-    return redirect("/member")
+        return redirect("/member")
+    
+    except Exception as e:
+        print(e)
+    
+    finally:
+        mycursor.close()
+        conn.close()
 
 
 app.run(port=3000)

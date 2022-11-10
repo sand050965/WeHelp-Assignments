@@ -7,6 +7,7 @@ from flask import session
 from flask import url_for
 from flask import jsonify
 import mysql.connector
+import re
 
 app = Flask(__name__)
 
@@ -21,13 +22,8 @@ dbconfig = {
 
 connect_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_name="mypool",
-    pool_size=3,
+    pool_size=5,
     **dbconfig)
-
-db = connect_pool.get_connection()
-
-if (db.is_connected()):
-    mycursor = db.cursor()
 
 
 @app.route("/")
@@ -46,17 +42,32 @@ def doSignUp():
     if (name == "" or username == "" or password == ""):
         return redirect(url_for('doError', message="請輸入註冊姓名、帳號、密碼"))
 
-    mycursor.execute(
-        "SELECT username FROM member WHERE username = %s", (username,))
-    result = mycursor.fetchall()
+    if not re.match(r'^[a-zA-Z][a-zA-Z0-9_]{4,15}$', username) or not re.match(r'^[a-zA-Z]\w{5,17}$', password):
+        return redirect(url_for('doError', message="註冊帳號、密碼不符合格式"))
 
-    if (len(result) != 0):
-        return redirect(url_for('doError', message="帳號已經被註冊"))
-    else:
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
+
         mycursor.execute(
-            "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
-        db.commit()
-        return redirect("/")
+            "SELECT username FROM member WHERE username = %s", (username,))
+        result = mycursor.fetchall()
+
+        if (len(result) != 0):
+            return redirect(url_for('doError', message="帳號已經被註冊"))
+        else:
+            mycursor.execute(
+                "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
+            conn.commit()
+            return redirect("/")
+    
+    except Exception as e:
+        print(e)
+    
+    finally:
+        mycursor.close()
+        conn.close()
 
 
 @app.route("/signin", methods=["POST"])
@@ -68,31 +79,52 @@ def doSignIn():
         session.pop("username", None)
         return redirect(url_for('doError', message="請輸入帳號、密碼"))
 
-    mycursor.execute(
-        "SELECT id, name FROM member WHERE username = %s and password = %s", (username, password))
-    result = mycursor.fetchone()
+    if not re.match(r'^[a-zA-Z][a-zA-Z0-9_]{4,15}$', username) or not re.match(r'^[a-zA-Z]\w{5,17}$', password):
+        return redirect(url_for('doError', message="登入帳號、密碼不符合格式"))
 
-    if (result != None):
-        id = result[0]
-        name = result[1]
-        session["id"] = id
-        session["username"] = username
-        session["name"] = name
-        return redirect('/member')
-    else:
-        session.clear()
-        return redirect(url_for('doError', message="帳號、或密碼輸入錯誤"))
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
+        mycursor.execute(
+            "SELECT id, name FROM member WHERE username = %s and password = %s", (username, password))
+        result = mycursor.fetchone()
+        if (result != None):
+            id = result[0]
+            name = result[1]
+            session["id"] = id
+            session["username"] = username
+            session["name"] = name
+            return redirect('/member')
+        else:
+            session.clear()
+            return redirect(url_for('doError', message="帳號、或密碼輸入錯誤"))
+    
+    except Exception as e:
+        print(e)
+    
+    finally:
+        conn.close()
+        mycursor.close()
 
 
 @app.route("/member")
 def doMember():
     if ("username" not in session):
         return redirect("/")
-
-    mycursor.execute(
-        "SELECT member.name, message.content FROM message JOIN member ON member.id = message.member_id ORDER BY message.time DESC")
-    result = mycursor.fetchall()
-    return render_template("member.html", name=session["name"], len=len(result), result=result)
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
+        mycursor.execute(
+            "SELECT member.name, message.content FROM message JOIN member ON member.id = message.member_id ORDER BY message.time DESC")
+        result = mycursor.fetchall()
+        return render_template("member.html", name=session["name"], len=len(result), result=result)
+    except Exception as e:
+        print(e)
+    finally:
+        mycursor.close()
+        conn.close()
 
 
 @app.route("/api/member", methods=["GET", "PATCH"])
@@ -100,6 +132,9 @@ def doAPIMember():
     if (request.method == "GET"):
         try:
             if ("username" in session):
+                conn = connect_pool.get_connection()
+                if (conn.is_connected()):
+                    mycursor = conn.cursor()
                 queryUserName = request.args.get('username')
                 mycursor.execute(
                     "SELECT id, name, username FROM member WHERE username = %s", (queryUserName,))
@@ -122,10 +157,18 @@ def doAPIMember():
             return jsonify({
                 "data": None
             })
+        
+        finally:
+            mycursor.close()
+            conn.close()
 
     elif (request.method == "PATCH"):
         try:
             if ("username" in session):
+                conn = connect_pool.get_connection()
+                if (conn.is_connected()):
+                    mycursor = conn.cursor()
+
                 data = request.get_json()
                 updateName = data["name"]
 
@@ -133,7 +176,7 @@ def doAPIMember():
                     username = session["username"]
                     mycursor.execute(
                         "UPDATE member SET name = %s WHERE username = %s", (updateName, username))
-                    db.commit()
+                    conn.commit()
                     session["name"] = updateName
                     return jsonify({
                         "ok": True
@@ -147,6 +190,10 @@ def doAPIMember():
             return jsonify({
                 "err": True
             })
+        
+        finally:
+            mycursor.close()
+            conn.close()
 
 
 @app.route("/signout", methods=["GET"])
@@ -167,10 +214,22 @@ def doMessage():
         return redirect("/")
 
     comment = request.form["comment"]
-    mycursor.execute(
-        "INSERT INTO message (member_id, content) VALUES (%s, %s)", (session["id"], comment))
-    db.commit()
-    return redirect("/member")
+
+    try:
+        conn = connect_pool.get_connection()
+        if (conn.is_connected()):
+            mycursor = conn.cursor()
+        mycursor.execute(
+            "INSERT INTO message (member_id, content) VALUES (%s, %s)", (session["id"], comment))
+        conn.commit()
+        return redirect("/member")
+    
+    except Exception as e:
+        print(e)
+    
+    finally:
+        mycursor.close()
+        conn.close()
 
 
 app.run(port=3000)

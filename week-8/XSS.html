@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XSS</title>
+  </head>
+  <script>
+    let show = () => {
+      let text = document.querySelector("#inputText");
+      document.querySelector("#showInput").innerHTML = text.value;
+    };
+  </script>
+  <body>
+    <div>
+      請輸入一些字: &nbsp;<input id="inputText" style="width: 600px" />
+      <input type="button" onclick="show();" value="送出" />
+      <div id="showInput"></div>
+    </div>
+  </body>
+</html>

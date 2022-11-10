@@ -13,35 +13,103 @@
       href="{{ url_for('static',filename='styles/index.css') }}"
     />
   </head>
+  <script>
+    let checkInput = (action) => {
+      //帳號是否合法 (字母開頭，允許 5-16 字節，允許字母數字下劃線)
+      let accountReg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+      //密碼 (以字母開頭，長度在 6~18 之間，只能包含字母、數字和下劃線)
+      let passwordReg = /^[a-zA-Z]\w{5,17}$/;
+
+      let errorMessage = "";
+
+      if ("signup" === action) {
+        let signupName = document.querySelector("#signupName").value.trim();
+        let signupUsername = document
+          .querySelector("#signupUsername")
+          .value.trim();
+        let signupPassword = document
+          .querySelector("#signupPassword")
+          .value.trim();
+
+        if (
+          signupName === "" ||
+          signupUsername === "" ||
+          signupPassword === ""
+        ) {
+          alert("請輸入註冊姓名、帳號、密碼");
+          return false;
+        } else {
+          if (!accountReg.test(signupUsername)) {
+            errorMessage += "註冊帳號需符合: 字母開頭、5-16位的英數字或下劃線\n";
+          }
+
+          if (!passwordReg.test(signupPassword)) {
+            errorMessage += "註冊密碼需符合: 字母開頭、6-18位的英數字或下劃線";
+          }
+
+          if (errorMessage != "") {
+            alert(errorMessage);
+            return false;
+          }
+        }
+      } else if ("signin" === action) {
+        let signinUsername = document
+          .querySelector("#signinUsername")
+          .value.trim();
+
+        let signinPassword = document
+          .querySelector("#signinPassword")
+          .value.trim();
+
+        if (signinUsername === "" || signinPassword === "") {
+          alert("請輸入帳號、密碼");
+          return false;
+        } else {
+          if (!accountReg.test(signinUsername)) {
+            errorMessage += "登入帳號需符合: 字母開頭、5-16位的英數字或下劃線\n";
+          }
+
+          if (!passwordReg.test(signinPassword)) {
+            errorMessage += "登入密碼需符合: 字母開頭、6-18位的英數字或下劃線";
+          }
+          if (errorMessage != "") {
+            alert(errorMessage);
+            return false;
+          }
+        }
+      }
+      return true;
+    };
+  </script>
 
   <body>
     <header class="header">歡迎光臨，請輸入帳號密碼</header>
     <div class="title">註冊帳號</div>
-    <form action="/signup" method="POST">
+    <form onsubmit="return checkInput('signup')" action="/signup" method="POST">
       <div class="login">
         <span>姓名</span>
-        <input type="text" name="name" />
+        <input id="signupName" type="text" name="name" />
       </div>
       <div class="login">
         <span>帳號</span>
-        <input type="text" name="username" />
+        <input id="signupUsername" type="text" name="username" />
       </div>
       <div class="login">
         <span>密碼</span>
-        <input type="password" name="password" />
+        <input id="signupPassword" type="password" name="password" />
       </div>
       <div class="btn"><button>註冊</button></div>
     </form>
     <hr />
     <div class="title">登入系統</div>
-    <form action="/signin" method="POST">
+    <form onsubmit="return checkInput('signin')" action="/signin" method="POST">
       <div class="login">
         <span>帳號</span>
-        <input type="text" name="username" />
+        <input id="signinUsername" type="text" name="username" />
       </div>
       <div class="login">
         <span>密碼</span>
-        <input type="password" name="password" />
+        <input id="signinPassword" type="password" name="password" />
       </div>
       <div class="btn"><button>登入</button></div>
     </form>

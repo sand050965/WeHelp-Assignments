@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    /*
+    Access to fetch at 'https://www.google.com/' from origin 'http://127.0.0.1:5500' has been blocked by CORS policy: 
+    Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present 
+    on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the 
+    resource with CORS disabled.
+    */
+    let google = (url) => {
+      const headers = new Headers();
+      headers.set("Access-Control-Allow-Origin", "*");
+      fetch(url, {
+        credentials: "include",
+      })
+        .then((response) => response.json)
+        .then((data) => console.log(data))
+        .catch((err) => alert(err));
+    };
+
+    let req = (url) => {
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    };
+  </script>
+  <body>
+    <div>
+      <input
+        type="button"
+        onclick="google('https://www.google.com')"
+        value="發出請求給google"
+      />
+      <input
+        type="button"
+        onclick="req('https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json')"
+        value="發出請求給網站"
+      />
+    </div>
+  </body>
+</html>
